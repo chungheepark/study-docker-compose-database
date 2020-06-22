@@ -1,0 +1,58 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      # - MONGO_INITDB_ROOT_USERNAME=teamgrit
+      # - MONGO_INITDB_ROOT_PASSWORD=teamgrit8266
+      # - MONGO_INITDB_DATABASE=teamgritapp
+    volumes:
+      - ./mongo-data:/data/db
+    ports:
+      - 27017:27017
+
+  # cockroach1:
+  #   image: cockroachdb/cockroach:v2.1.0
+  #   restart: always
+  #   command: start --insecure
+  #   ports:
+  #     - 26257:26257
+  #   volumes:
+  #     - ./cockroach-data/roach1:/cockroach/cockroach-data
+  #   networks:
+  #     - artc_was_net
+  
+  # cockroach2:
+  #   image: cockroachdb/cockroach:v2.1.0
+  #   restart: always
+  #   command: start --insecure --join=cockroach1
+  #   depends_on:
+  #     - cockroach1
+  #   volumes:
+  #     - ./cockroach-data/roach2:/cockroach/cockroach-data
+  #   networks:
+  #     - artc_was_net
+  
+  # cockroach3:
+  #   image: cockroachdb/cockroach:v2.1.0
+  #   restart: always
+  #   command: start --insecure --join=cockroach1
+  #   depends_on:
+  #     - cockroach1
+  #   volumes:
+  #     - ./cockroach-data/roach3:/cockroach/cockroach-data
+  #   networks:
+  #     - artc_was_net
+
+#networks: 
+#  artc_was_net:
+#    driver: bridge
